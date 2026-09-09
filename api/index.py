@@ -48,7 +48,7 @@ def open_app_markup(chat_type: str) -> dict:
 def amharic_menu_markup(chat_type: str) -> dict:
     rows = [
         [
-            {"text": "🎮 ጨዋታ", "callback_data": "menu_play"},
+            {"text": "📞 አድሚን", "callback_data": "menu_contact"},
             {"text": "📖 እንዴት መጫወት", "callback_data": "menu_howtoplay"},
         ],
         [
@@ -91,15 +91,19 @@ AMHARIC_POPUPS = {
         "4) ቁጥሮች ይጠራሉ 5) ሲያሸንፉ ሲስተሙ በራሱ ያሳውቃል።"
     ),
     "menu_deposit": (
-        "💳 ገንዘብ ማስገባት\n"
+        "💳 ቀሪ ሂሳብ\n"
         "አዲስ ካርድ ለመምረጥ ቢያንስ 20 ብር ያስፈልጋል። "
-        "በ0923535786 ቴሌብር ላይ ገቢ አድርገው"
-        "screenshot እዚሁ ቦቱ ላይ ይላኩ።"
+        "ቀሪ ሂሳብ ለመጨመር አድሚኑን ያነጋግሩ።"
+    ),
+    "menu_contact": (
+        "📞 አድሚን\n"
+        "በአካውንት፣ ቀሪ ሂሳብ ወይም በጨዋታ ችግኝ ላይ "
+        "እርዳታ ከፈለጉ አድሚኑን ያነጋግሩ።"
     ),
     "menu_help": (
         "❓ እርዳታ\n"
-        "/start ጀምር • /play ጨዋታ • /howtoplay መመሪያ • "
-        "/deposit ቀሪ ሂሳብ • /help እርዳታ"
+        "/start ጀምር • /howtoplay መመሪያ • "
+        "/deposit ቀሪ ሂሳብ • /contact አድሚን • /help እርዳታ"
     ),
 }
 
@@ -163,9 +167,9 @@ class handler(BaseHTTPRequestHandler):
                     {
                         "commands": [
                             {"command": "start", "description": "ተሙ ቢንጎን ጀምር"},
-                            {"command": "play", "description": "ጨዋታውን ክፈት"},
                             {"command": "howtoplay", "description": "እንዴት እንደሚጫወት"},
                             {"command": "deposit", "description": "ቀሪ ሂሳብ መረጃ"},
+                            {"command": "contact", "description": "አድሚኑን ያነጋግሩ"},
                             {"command": "help", "description": "እርዳታ"},
                         ]
                     },
@@ -256,7 +260,7 @@ class handler(BaseHTTPRequestHandler):
             first_name = str(sender.get("first_name", "")).strip()
             text = str(message.get("text", "")).strip()
 
-            if text.startswith("/start") or text.startswith("/play"):
+            if text.startswith("/start"):
                 send_open_app_message(
                     int(chat_id),
                     chat_type,
@@ -279,6 +283,20 @@ class handler(BaseHTTPRequestHandler):
                     {
                         "chat_id": int(chat_id),
                         "text": "💳 ቀሪ ሂሳብ — ከታች “ቀሪ ሂሳብ” የሚለውን ቁልፍ ይጫኑ።",
+                        "reply_markup": amharic_menu_markup(chat_type),
+                    },
+                )
+
+            elif text.startswith("/contact"):
+                telegram_api(
+                    "sendMessage",
+                    {
+                        "chat_id": int(chat_id),
+                        "text": (
+                            "📞 አድሚኑን ያነጋግሩ\n\n"
+                            "በአካውንት፣ ቀሪ ሂሳብ ወይም በጨዋታ ችግኝ "
+                            "ላይ እርዳታ ከፈለጉ አድሚኑን ያነጋግሩ።"
+                        ),
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
