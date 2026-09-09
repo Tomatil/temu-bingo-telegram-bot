@@ -119,3 +119,24 @@ Then Telegram's bottom-left **Menu** button will show:
 
 `/deposit` does not collect a real-money payment. It tells the user that balance
 additions are handled by the Temu Bingo admin and gives an Open Temu Bingo button.
+
+
+## Amharic command menu + popup instructions
+
+Telegram slash command names must remain Latin (`/start`, `/play`, etc.), but
+their descriptions now appear in Amharic.
+
+New command:
+- `/howtoplay` — እንዴት እንደሚጫወት
+
+After `/start`, the bot shows Amharic buttons:
+- 🎮 ጨዋታ
+- 📖 እንዴት መጫወት
+- 💳 ቀሪ ሂሳብ
+- ❓ እርዳታ
+- 🎱 ተሙ ቢንጎን ክፈት
+
+Clicking the first four buttons shows the instructions in Telegram's small popup window.
+
+After Vercel redeploys this version, run the setup URL again once:
+`https://temu-bingo-telegram-bot.vercel.app/api?setup=YOUR_SETUP_SECRET`
