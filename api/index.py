@@ -44,6 +44,65 @@ def open_app_markup(chat_type: str) -> dict:
     return {"inline_keyboard": [[button]]}
 
 
+
+def amharic_menu_markup(chat_type: str) -> dict:
+    rows = [
+        [
+            {"text": "🎮 ጨዋታ", "callback_data": "menu_play"},
+            {"text": "📖 እንዴት መጫወት", "callback_data": "menu_howtoplay"},
+        ],
+        [
+            {"text": "💳 ቀሪ ሂሳብ", "callback_data": "menu_deposit"},
+            {"text": "❓ እርዳታ", "callback_data": "menu_help"},
+        ],
+    ]
+
+    if chat_type == "private":
+        rows.append(
+            [
+                {
+                    "text": "🎱 ተሙ ቢንጎን ክፈት",
+                    "web_app": {"url": APP_URL},
+                }
+            ]
+        )
+    else:
+        rows.append(
+            [
+                {
+                    "text": "🎱 ተሙ ቢንጎን ክፈት",
+                    "url": APP_URL,
+                }
+            ]
+        )
+
+    return {"inline_keyboard": rows}
+
+
+AMHARIC_POPUPS = {
+    "menu_play": (
+        "🎮 ጨዋታ\n"
+        "“ተሙ ቢንጎን ክፈት” የሚለውን ቁልፍ ይጫኑ፣ "
+        "ይግቡ እና ካርድ ይምረጡ።"
+    ),
+    "menu_howtoplay": (
+        "📖 እንዴት መጫወት\n"
+        "1) ይግቡ 2) ቀሪ ሂሳብ ≥20 ይሁን 3) ካርድ ይምረጡ "
+        "4) ቁጥሮች ይጠራሉ 5) ሲያሸንፉ ሲስተሙ በራሱ ያሳውቃል።"
+    ),
+    "menu_deposit": (
+        "💳 ቀሪ ሂሳብ\n"
+        "አዲስ ካርድ ለመምረጥ ቢያንስ 20 ያስፈልጋል። "
+        "ቀሪ ሂሳብ ለመጨመር አድሚኑን ያነጋግሩ።"
+    ),
+    "menu_help": (
+        "❓ እርዳታ\n"
+        "/start ጀምር • /play ጨዋታ • /howtoplay መመሪያ • "
+        "/deposit ቀሪ ሂሳብ • /help እርዳታ"
+    ),
+}
+
+
 def send_open_app_message(chat_id: int, chat_type: str, first_name: str = "") -> None:
     greeting = f"ሰላም {first_name}!" if first_name else "ሰላም!"
     text = (
@@ -54,7 +113,7 @@ def send_open_app_message(chat_id: int, chat_type: str, first_name: str = "") ->
     )
     telegram_api(
         "sendMessage",
-        {"chat_id": chat_id, "text": text, "reply_markup": open_app_markup(chat_type)},
+        {"chat_id": chat_id, "text": text, "reply_markup": amharic_menu_markup(chat_type)},
     )
 
 
@@ -94,7 +153,7 @@ class handler(BaseHTTPRequestHandler):
                     {
                         "url": webhook_url,
                         "secret_token": WEBHOOK_SECRET,
-                        "allowed_updates": ["message"],
+                        "allowed_updates": ["message", "callback_query"],
                         "drop_pending_updates": True,
                     },
                 )
@@ -102,10 +161,11 @@ class handler(BaseHTTPRequestHandler):
                     "setMyCommands",
                     {
                         "commands": [
-                            {"command": "start", "description": "Start Temu Bingo"},
-                            {"command": "play", "description": "Open the game"},
-                            {"command": "deposit", "description": "How to add game balance"},
-                            {"command": "help", "description": "Show help"},
+                            {"command": "start", "description": "ተሙ ቢንጎን ጀምር"},
+                            {"command": "play", "description": "ጨዋታውን ክፈት"},
+                            {"command": "howtoplay", "description": "እንዴት እንደሚጫወት"},
+                            {"command": "deposit", "description": "ቀሪ ሂሳብ መረጃ"},
+                            {"command": "help", "description": "እርዳታ"},
                         ]
                     },
                 )
@@ -161,6 +221,26 @@ class handler(BaseHTTPRequestHandler):
             content_length = int(self.headers.get("content-length", "0") or 0)
             raw = self.rfile.read(content_length)
             update = json.loads(raw.decode("utf-8")) if raw else {}
+            callback = update.get("callback_query")
+            if callback:
+                callback_id = callback.get("id")
+                callback_data = str(callback.get("data", ""))
+                popup_text = AMHARIC_POPUPS.get(callback_data)
+
+                if callback_id and popup_text:
+                    telegram_api(
+                        "answerCallbackQuery",
+                        {
+                            "callback_query_id": callback_id,
+                            "text": popup_text,
+                            "show_alert": True,
+                            "cache_time": 0,
+                        },
+                    )
+
+                self._send_json(200, {"ok": True})
+                return
+
             message = update.get("message")
             if not message:
                 self._send_json(200, {"ok": True})
@@ -182,18 +262,23 @@ class handler(BaseHTTPRequestHandler):
                     first_name,
                 )
 
+            elif text.startswith("/howtoplay"):
+                telegram_api(
+                    "sendMessage",
+                    {
+                        "chat_id": int(chat_id),
+                        "text": "📖 እንዴት መጫወት — ከታች ያለውን ቁልፍ ይጫኑ።",
+                        "reply_markup": amharic_menu_markup(chat_type),
+                    },
+                )
+
             elif text.startswith("/deposit"):
                 telegram_api(
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": (
-                            "💳 Balance\n\n"
-                            "To continue playing, your game balance must be at least 20.\n"
-                            "Balance additions are handled by the Temu Bingo admin.\n\n"
-                            "No payment is processed inside this Telegram bot."
-                        ),
-                        "reply_markup": open_app_markup(chat_type),
+                        "text": "💳 ቀሪ ሂሳብ — ከታች “ቀሪ ሂሳብ” የሚለውን ቁልፍ ይጫኑ።",
+                        "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
 
@@ -202,14 +287,8 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": (
-                            "🎱 Temu Bingo commands\n\n"
-                            "/start — Start Temu Bingo\n"
-                            "/play — Open the game\n"
-                            "/deposit — How to add game balance\n"
-                            "/help — Show this help"
-                        ),
-                        "reply_markup": open_app_markup(chat_type),
+                        "text": "❓ እርዳታ — ከታች የሚፈልጉትን ምርጫ ይጫኑ።",
+                        "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
 
