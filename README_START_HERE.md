@@ -101,3 +101,21 @@ Never share:
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_WEBHOOK_SECRET`
 - `SETUP_SECRET`
+
+
+## Bottom-left Telegram command menu
+
+After uploading this updated package to GitHub and Vercel redeploys it,
+open your setup URL one more time:
+
+`https://temu-bingo-telegram-bot.vercel.app/api?setup=YOUR_SETUP_SECRET`
+
+Then Telegram's bottom-left **Menu** button will show:
+
+- `/start` — Start Temu Bingo
+- `/play` — Open the game
+- `/deposit` — How to add game balance
+- `/help` — Show help
+
+`/deposit` does not collect a real-money payment. It tells the user that balance
+additions are handled by the Temu Bingo admin and gives an Open Temu Bingo button.
