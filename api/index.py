@@ -102,8 +102,10 @@ class handler(BaseHTTPRequestHandler):
                     "setMyCommands",
                     {
                         "commands": [
-                            {"command": "start", "description": "Open Temu Bingo"},
+                            {"command": "start", "description": "Start Temu Bingo"},
                             {"command": "play", "description": "Open the game"},
+                            {"command": "deposit", "description": "How to add game balance"},
+                            {"command": "help", "description": "Show help"},
                         ]
                     },
                 )
@@ -114,9 +116,7 @@ class handler(BaseHTTPRequestHandler):
                         "setChatMenuButton",
                         {
                             "menu_button": {
-                                "type": "web_app",
-                                "text": "Open Temu Bingo",
-                                "web_app": {"url": APP_URL},
+                                "type": "commands"
                             }
                         },
                     )
@@ -174,8 +174,52 @@ class handler(BaseHTTPRequestHandler):
             sender = message.get("from", {})
             first_name = str(sender.get("first_name", "")).strip()
             text = str(message.get("text", "")).strip()
-            if text.startswith("/start") or text.startswith("/play") or text:
-                send_open_app_message(int(chat_id), chat_type, first_name)
+
+            if text.startswith("/start") or text.startswith("/play"):
+                send_open_app_message(
+                    int(chat_id),
+                    chat_type,
+                    first_name,
+                )
+
+            elif text.startswith("/deposit"):
+                telegram_api(
+                    "sendMessage",
+                    {
+                        "chat_id": int(chat_id),
+                        "text": (
+                            "💳 Balance\n\n"
+                            "To continue playing, your game balance must be at least 20.\n"
+                            "Balance additions are handled by the Temu Bingo admin.\n\n"
+                            "No payment is processed inside this Telegram bot."
+                        ),
+                        "reply_markup": open_app_markup(chat_type),
+                    },
+                )
+
+            elif text.startswith("/help"):
+                telegram_api(
+                    "sendMessage",
+                    {
+                        "chat_id": int(chat_id),
+                        "text": (
+                            "🎱 Temu Bingo commands\n\n"
+                            "/start — Start Temu Bingo\n"
+                            "/play — Open the game\n"
+                            "/deposit — How to add game balance\n"
+                            "/help — Show this help"
+                        ),
+                        "reply_markup": open_app_markup(chat_type),
+                    },
+                )
+
+            elif text:
+                send_open_app_message(
+                    int(chat_id),
+                    chat_type,
+                    first_name,
+                )
+
             self._send_json(200, {"ok": True})
         except Exception as exc:
             print("Webhook error:", repr(exc))
