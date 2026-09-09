@@ -115,7 +115,8 @@ def send_open_app_message(chat_id: int, chat_type: str, first_name: str = "") ->
         "🎱 ተሙ ቢንጎ\n\n"
         f"{greeting}\n"
         "ተሙ ቢንጎን ለመጫወት ከታች ያለውን ቁልፍ ይጫኑ።\n\n"
-        "Tap the button below to open Temu Bingo."
+        "Tap the button below to open Temu Bingo.\n"
+        "ገቢ ለማድረግ 0923535786 ቴሌብር ይጠቀሙ"
     )
     telegram_api(
         "sendMessage",
