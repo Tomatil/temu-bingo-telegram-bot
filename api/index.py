@@ -48,11 +48,11 @@ def open_app_markup(chat_type: str) -> dict:
 def amharic_menu_markup(chat_type: str) -> dict:
     rows = [
         [
-            {"text": "📞 አድሚን", "callback_data": "menu_contact"},
+            {"text": "📞 ወጪ ማድረግ", "callback_data": "menu_contact"},
             {"text": "📖 እንዴት መጫወት", "callback_data": "menu_howtoplay"},
         ],
         [
-            {"text": "💳 ቀሪ ሂሳብ", "callback_data": "menu_deposit"},
+            {"text": "💳 ገቢ ማድረግ", "callback_data": "menu_deposit"},
             {"text": "❓ እርዳታ", "callback_data": "menu_help"},
         ],
     ]
@@ -91,14 +91,15 @@ AMHARIC_POPUPS = {
         "4) ቁጥሮች ይጠራሉ 5) ሲያሸንፉ ሲስተሙ በራሱ ያሳውቃል።"
     ),
     "menu_deposit": (
-        "💳 ቀሪ ሂሳብ\n"
+        "💳 ገንዘብ ገቢ\n"
         "አዲስ ካርድ ለመምረጥ ቢያንስ 20 ብር ያስፈልጋል። "
-        "ቀሪ ሂሳብ ለመጨመር አድሚኑን ያነጋግሩ።"
+        "በ0923535786 ቴሌብር ላይ ገቢ አድርገው"
+        "screenshot እዚሁ ቦቱ ላይ ይላኩ።"
     ),
     "menu_contact": (
-        "📞 አድሚን\n"
-        "በአካውንት፣ ቀሪ ሂሳብ ወይም በጨዋታ ችግኝ ላይ "
-        "እርዳታ ከፈለጉ አድሚኑን ያነጋግሩ።"
+        "📞 ገንዘብ ወጭ\n"
+        "ገንዘብዎን ማውጣት ሲፈልጉ"
+        "እዚሁ ቦቱ ላይ ይጻፉ (አድሚኑን ያነጋግሩ።)"
     ),
     "menu_help": (
         "❓ እርዳታ\n"
