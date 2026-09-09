@@ -140,3 +140,29 @@ Clicking the first four buttons shows the instructions in Telegram's small popup
 
 After Vercel redeploys this version, run the setup URL again once:
 `https://temu-bingo-telegram-bot.vercel.app/api?setup=YOUR_SETUP_SECRET`
+
+
+## Balance popup text update
+
+The balance popup now says:
+
+`አዲስ ካርድ ለመምረጥ ቢያንስ 20 ብር ያስፈልጋል። ቀሪ ሂሳብ ለመጨመር አድሚኑን ያነጋግሩ።`
+
+After Vercel redeploys, run the setup URL once again if needed.
+
+
+## Command cleanup
+
+`/play` was removed because `/start` already opens Temu Bingo.
+
+Current commands:
+- `/start` — ተሙ ቢንጎን ጀምር
+- `/howtoplay` — እንዴት እንደሚጫወት
+- `/deposit` — ቀሪ ሂሳብ መረጃ
+- `/contact` — አድሚኑን ያነጋግሩ
+- `/help` — እርዳታ
+
+`/contact` is for account, balance, or game-support questions. It does not provide
+cash-out or withdrawal handling.
+
+After Vercel redeploys, run the setup URL once again.
