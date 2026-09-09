@@ -166,3 +166,25 @@ Current commands:
 cash-out or withdrawal handling.
 
 After Vercel redeploys, run the setup URL once again.
+
+
+## Group slash-command menu
+
+This version explicitly installs the command list for all Telegram groups and
+supergroups using the `all_group_chats` command scope.
+
+After Vercel redeploys, run the setup URL once again:
+
+`https://temu-bingo-telegram-bot.vercel.app/api?setup=YOUR_SETUP_SECRET`
+
+Then, in a Telegram group containing `@temubingo_bot`, when a user types `/`,
+Telegram should show:
+
+- `/start` — ተሙ ቢንጎን ጀምር
+- `/howtoplay` — እንዴት እንደሚጫወት
+- `/deposit` — ቀሪ ሂሳብ መረጃ
+- `/contact` — አድሚኑን ያነጋግሩ
+- `/help` — እርዳታ
+
+If multiple bots are present in the group, Telegram may display the bot-qualified
+form such as `/start@temubingo_bot`.
