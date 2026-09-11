@@ -87,24 +87,26 @@ AMHARIC_POPUPS = {
     ),
     "menu_howtoplay": (
         "📖 እንዴት መጫወት\n"
-        "1) ይግቡ 2) ቀሪ ሂሳብ ≥20 ይሁን 3) ካርድ ይምረጡ "
+        "1) ይግቡ 2) ቀሪ ሂሳብዎ ≥20 ይሁን 3) ካርድ ይምረጡ "
         "4) ቁጥሮች ይጠራሉ 5) ሲያሸንፉ ሲስተሙ በራሱ ያሳውቃል።"
     ),
     "menu_deposit": (
         "💳 ገንዘብ ገቢ\n"
         "አዲስ ካርድ ለመምረጥ ቢያንስ 20 ብር ያስፈልጋል። "
-        "በ0923535786 ቴሌብር ላይ ገቢ አድርገው"
-        "screenshot እዚሁ ቦቱ ላይ ይላኩ።"
+        "በ0923535786 ቴሌብር ላይ ገቢ አድርገው- "
+        "screenshot እዚሁ ግሩፑ ላይ ይላኩ። \n"
+        "Min. deposit 100 ብር ነው። "
     ),
     "menu_contact": (
         "📞 ገንዘብ ወጭ\n"
-        "ገንዘብዎን ማውጣት ሲፈልጉ"
-        "እዚሁ ቦቱ ላይ ይጻፉ (አድሚኑን ያነጋግሩ።)"
+        "ገንዘብዎን ማውጣት ሲፈልጉ "
+        "እዚሁ ግሩፑ ላይ ይጻፉ (አድሚኑን ያነጋግሩ።)"
     ),
     "menu_help": (
         "❓ እርዳታ\n"
         "/start ጀምር • /howtoplay መመሪያ • "
-        "/deposit ቀሪ ሂሳብ • /contact አድሚን • /help እርዳታ"
+        "/deposit ገቢ ለማድረግ • /withdraw ወጪ ለማድረግ • /help እርዳታ \n"
+        "ወይም ግሩፑ ላይ ይጻፉ።"
     ),
 }
 
@@ -168,10 +170,10 @@ class handler(BaseHTTPRequestHandler):
                     "setMyCommands",
                     {
                         "commands": [
-                            {"command": "start", "description": "ተሙ ቢንጎን ጀምር"},
+                            {"command": "start", "description": "ጨዋታ ጀምር"},
                             {"command": "howtoplay", "description": "እንዴት እንደሚጫወት"},
-                            {"command": "deposit", "description": "ቀሪ ሂሳብ መረጃ"},
-                            {"command": "contact", "description": "አድሚኑን ያነጋግሩ"},
+                            {"command": "deposit", "description": "ገንዘብ ገቢ"},
+                            {"command": "withdraw", "description": "ገንዘብ ወጪ"},
                             {"command": "help", "description": "እርዳታ"},
                         ]
                     },
