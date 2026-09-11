@@ -286,21 +286,17 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "💳 ቀሪ ሂሳብ — ከታች “ቀሪ ሂሳብ” የሚለውን ቁልፍ ይጫኑ።",
+                        "text": "💳 ገቢ ለማድረግ — ከታች "ገቢ ማድረግ" የሚለውን ቁልፍ ይጫኑ።",
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
 
-            elif text.startswith("/contact"):
+            elif text.startswith("/withdraw"):
                 telegram_api(
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": (
-                            "📞 አድሚኑን ያነጋግሩ\n\n"
-                            "በአካውንት፣ ቀሪ ሂሳብ ወይም በጨዋታ ችግኝ "
-                            "ላይ እርዳታ ከፈለጉ አድሚኑን ያነጋግሩ።"
-                        ),
+                        "text": "💳 ወጪ ለማድረግ —  ከታች "ወጪ ማድረግ" የሚለውን ቁልፍ ይጫኑ።",                            
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
@@ -310,7 +306,7 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "❓ እርዳታ — ከታች የሚፈልጉትን ምርጫ ይጫኑ።",
+                        "text": "❓ እርዳታ — ከታች "እርዳታ" የሚለውን ምርጫ ይጫኑ።",
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
