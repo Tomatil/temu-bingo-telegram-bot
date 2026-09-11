@@ -48,8 +48,8 @@ def open_app_markup(chat_type: str) -> dict:
 def amharic_menu_markup(chat_type: str) -> dict:
     rows = [
         [
-            {"text": "📞 ወጪ ማድረግ", "callback_data": "menu_contact"},
-            {"text": "📖 እንዴት መጫወት", "callback_data": "menu_howtoplay"},
+            {"text": "💳  ወጪ ማድረግ", "callback_data": "menu_contact"},
+            {"text": "📖 መመሪያ", "callback_data": "menu_howtoplay"},
         ],
         [
             {"text": "💳 ገቢ ማድረግ", "callback_data": "menu_deposit"},
@@ -99,7 +99,7 @@ AMHARIC_POPUPS = {
         "Min. deposit 100 ብር ነው። "
     ),
     "menu_contact": (
-        "📞 ገንዘብ ወጭ\n"
+        "💳 ገንዘብ ወጭ\n"
         "ገንዘብዎን ማውጣት ሲፈልጉ "
         "እዚሁ ግሩፑ ላይ ይጻፉ (አድሚኑን ያነጋግሩ።)"
     ),
@@ -277,7 +277,7 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "📖 እንዴት መጫወት — ከታች ያለውን ቁልፍ ይጫኑ።",
+                        "text": "📖 እንዴት መጫወት — ከታች መመሪያ የሚለውን ቁልፍ ይጫኑ።",
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
