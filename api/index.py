@@ -286,7 +286,7 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "💳 ገቢ ለማድረግ — ከታች "ገቢ ማድረግ" የሚለውን ቁልፍ ይጫኑ።",
+                        "text": "💳 ገቢ ለማድረግ — ከታች ገቢ ማድረግ የሚለውን ቁልፍ ይጫኑ።",
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
@@ -296,7 +296,7 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "💳 ወጪ ለማድረግ —  ከታች "ወጪ ማድረግ" የሚለውን ቁልፍ ይጫኑ።",                            
+                        "text": "💳 ወጪ ለማድረግ —  ከታች ወጪ ማድረግ የሚለውን ቁልፍ ይጫኑ።",                            
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
@@ -306,7 +306,7 @@ class handler(BaseHTTPRequestHandler):
                     "sendMessage",
                     {
                         "chat_id": int(chat_id),
-                        "text": "❓ እርዳታ — ከታች "እርዳታ" የሚለውን ምርጫ ይጫኑ።",
+                        "text": "❓ለእርዳታ — ከታች እርዳታ የሚለውን ምርጫ ይጫኑ።",
                         "reply_markup": amharic_menu_markup(chat_type),
                     },
                 )
